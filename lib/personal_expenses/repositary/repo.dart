@@ -3,6 +3,7 @@ import 'package:quiz/personal_expenses/repositary/fav_database.dart';
 
 class Repo {
   final FavDatabase favDatabase = FavDatabase();
+  // ignore: unused_field
   List<FavModel> _favModel = [];
   Future<void> _getFavNote() async {
     await favDatabase.getNote().then((value) {
@@ -10,6 +11,7 @@ class Repo {
     });
   }
 
+  // ignore: unused_element
   Future<void> _addToFav(
       {required String title,
       required String content,
@@ -25,6 +27,7 @@ class Repo {
     await _getFavNote();
   }
 
+  // ignore: unused_element
   Future<void> _deleteFavNote({required int index}) async {
     await favDatabase.deleteNote(index);
     await _getFavNote();

@@ -13,7 +13,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   final FavDatabase favDatabase;
   final NoteDataBase noteDataBase;
   List<ExpenseModel> _expenseModel = [];
-  List<FavModel> _favModel = [];
+  // List<FavModel> _favModel = [];
   DataBloc({required this.noteDataBase, required this.favDatabase})
       : super(DataInitial());
 

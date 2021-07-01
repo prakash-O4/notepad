@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
 import 'package:quiz/personal_expenses/repositary/fav_database.dart';
+import 'package:quiz/personal_expenses/screens/note_app/home_screen.dart';
 import 'package:quiz/personal_expenses/widget/input_card.dart';
 import 'package:quiz/personal_expenses/widget/main_card.dart';
 import 'package:quiz/rough.dart';
@@ -112,6 +113,7 @@ class _PersonalExpensesState extends State<PersonalExpenses> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FloatingActionButton(
+            heroTag: "hero1",
             onPressed: () {
               showDialog(
                 context: context,
@@ -129,6 +131,23 @@ class _PersonalExpensesState extends State<PersonalExpenses> {
               ),
             ),
           ),
+          FloatingActionButton(
+            heroTag: "hero2",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(),
+                ),
+              );
+            },
+            child: Center(
+              child: Icon(
+                Icons.navigate_next_rounded,
+                size: 20,
+              ),
+            ),
+          )
         ],
       ),
     );

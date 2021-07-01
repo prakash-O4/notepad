@@ -59,8 +59,8 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
     await _getFavNote();
   }
 
-  Future<void> _deleteFavNote({required int index}) async {
-    await favDatabase.deleteNote(index);
-    await _getFavNote();
-  }
+  // Future<void> _deleteFavNote({required int index}) async {
+  //   await favDatabase.deleteNote(index);
+  //   await _getFavNote();
+  // }
 }

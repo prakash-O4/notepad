@@ -5,9 +5,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
 import 'package:quiz/personal_expenses/model/expense_model.dart';
 import 'package:quiz/personal_expenses/model/fav_model.dart';
-import 'package:quiz/personal_expenses/personal_expenses.dart';
 import 'package:quiz/personal_expenses/repositary/database.dart';
 import 'package:quiz/personal_expenses/repositary/fav_database.dart';
+import 'package:quiz/personal_expenses/screens/note_app/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ],
-      child: PersonalExpenses(),
+      child: HomeScreen(),
     );
   }
 }

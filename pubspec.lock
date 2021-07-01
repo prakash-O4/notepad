@@ -223,6 +223,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.0.1"
+  flutter_staggered_grid_view:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_grid_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -284,6 +291,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.17.0"
   io:
     dependency: transitive
     description:
@@ -585,4 +599,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.13.0 <3.0.0"
-  flutter: ">=1.20.0"
+  flutter: ">=1.24.0-6.0.pre"
