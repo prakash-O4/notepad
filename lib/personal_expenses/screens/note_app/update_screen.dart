@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -17,13 +16,11 @@ class UpdateScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<UpdateScreen> {
-  late DataBloc _updateDataBloc;
   late TextEditingController _controllerTitle;
   late TextEditingController _controllerContent;
   @override
   void initState() {
     super.initState();
-    _updateDataBloc = BlocProvider.of(context);
     _controllerTitle = TextEditingController(text: widget.noteModel.title);
     _controllerContent = TextEditingController(text: widget.noteModel.content);
   }
@@ -72,7 +69,7 @@ class _AddScreenState extends State<UpdateScreen> {
                       GestureDetector(
                         onTap: () {
                           var date = currentDate();
-                          _updateDataBloc.add(
+                          BlocProvider.of<DataBloc>(context).add(
                             UpdateItem(
                               index: widget.index,
                               content: _controllerContent.text,
@@ -81,7 +78,6 @@ class _AddScreenState extends State<UpdateScreen> {
                               date: date,
                             ),
                           );
-                          print("update event fired!!!");
                           Navigator.pop(context);
                         },
                         child: IconCard(icon: Icons.save),

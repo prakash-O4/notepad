@@ -4,7 +4,6 @@ import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
 import 'package:quiz/personal_expenses/constants.dart';
 import 'package:quiz/personal_expenses/model/note_model.dart';
 import 'package:quiz/personal_expenses/screens/note_app/update_screen.dart';
-import 'package:quiz/personal_expenses/widget/card_data.dart';
 import 'package:quiz/personal_expenses/widget/icon_card.dart';
 
 class DetaiScreen extends StatefulWidget {
@@ -17,6 +16,7 @@ class DetaiScreen extends StatefulWidget {
 }
 
 class _DetaiScreenState extends State<DetaiScreen> {
+  // ignore: unused_field
   late DataBloc _dataBloc;
   @override
   void initState() {

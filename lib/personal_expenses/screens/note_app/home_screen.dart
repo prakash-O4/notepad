@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
 import 'package:quiz/personal_expenses/constants.dart';
 import 'package:quiz/personal_expenses/model/note_model.dart';
@@ -8,6 +9,7 @@ import 'package:quiz/personal_expenses/screens/note_app/details_screen.dart';
 import 'package:quiz/personal_expenses/widget/card_tile.dart';
 import 'package:quiz/personal_expenses/widget/icon_card.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:quiz/personal_expenses/widget/input_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _dataBloc = BlocProvider.of<DataBloc>(context);
     _dataBloc.add(InitialEvent());
-    print("initial event fired");
   }
 
   @override
@@ -48,16 +49,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       "Notes",
-                      style: TextStyle(
+                      style: GoogleFonts.lato(
                         fontSize: 30,
                         fontWeight: FontWeight.w600,
                         color: Colors.white,
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => SimpleCustomAlert(
+                            text: "Long Press to delete the note",
+                            isDev: true,
+                          ),
+                        );
+                      },
                       child: IconCard(
-                        icon: Icons.search_rounded,
+                        icon: Icons.help,
                       ),
                     ),
                   ],
@@ -97,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
                                     onLongPress: () {
-                                      print("data need to be deleted");
                                       _dataBloc.add(
                                         DeleteItem(index: index),
                                       );

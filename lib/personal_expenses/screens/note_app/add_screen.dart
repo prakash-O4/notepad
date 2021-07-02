@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
 import 'package:quiz/personal_expenses/constants.dart';
 import 'package:quiz/personal_expenses/widget/icon_card.dart';
+import 'package:quiz/personal_expenses/widget/input_card.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({Key? key}) : super(key: key);
@@ -15,11 +16,15 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
+  late TextEditingController _controllerTitle;
+  late TextEditingController _controllerContent;
   late DataBloc _addDataBloc;
   @override
   void initState() {
     super.initState();
     _addDataBloc = BlocProvider.of(context);
+    _controllerTitle = TextEditingController();
+    _controllerContent = TextEditingController();
   }
 
   returnColor() {
@@ -35,10 +40,17 @@ class _AddScreenState extends State<AddScreen> {
     return formattedDate;
   }
 
+  checkTextField() {}
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controllerTitle.dispose();
+    _controllerContent.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController _controllerTitle = TextEditingController();
-    TextEditingController _controllerContent = TextEditingController();
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
@@ -68,16 +80,28 @@ class _AddScreenState extends State<AddScreen> {
                         onTap: () {
                           var color = returnColor();
                           var date = currentDate();
-                          _addDataBloc.add(
-                            AddDataEvent(
-                              content: _controllerContent.text,
-                              title: _controllerTitle.text,
-                              color: color,
-                              date: date,
-                            ),
-                          );
-                          // print("data added");
-                          Navigator.pop(context);
+                          if (_controllerTitle.value.text.isNotEmpty &&
+                              _controllerContent.value.text.isNotEmpty) {
+                            _addDataBloc.add(
+                              AddDataEvent(
+                                content: _controllerContent.text,
+                                title: _controllerTitle.text,
+                                color: color,
+                                date: date,
+                              ),
+                            );
+                            // print("data added");
+                            Navigator.pop(context);
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => SimpleCustomAlert(
+                                text:
+                                    "Please insert both title and content to save",
+                                isDev: false,
+                              ),
+                            );
+                          }
                         },
                         child: IconCard(icon: Icons.save),
                       ),
@@ -87,6 +111,8 @@ class _AddScreenState extends State<AddScreen> {
                     height: 30,
                   ),
                   TextField(
+                    textCapitalization: TextCapitalization.sentences,
+                    textInputAction: TextInputAction.done,
                     controller: _controllerTitle,
                     cursorColor: Colors.white,
                     style: TextStyle(
@@ -109,25 +135,33 @@ class _AddScreenState extends State<AddScreen> {
                       ),
                     ),
                   ),
-                  TextField(
-                    controller: _controllerContent,
-                    maxLines: null,
-                    keyboardType: TextInputType.multiline,
-                    cursorColor: Colors.white,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
+                  Container(
+                    constraints: BoxConstraints(
+                      maxHeight: 70,
                     ),
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: 1,
-                      ),
-                      border: InputBorder.none,
-                      hintText: "Type something....",
-                      hintStyle: TextStyle(
-                        letterSpacing: 1.0,
-                        fontSize: 26,
-                        color: Colors.white70,
+                    child: SingleChildScrollView(
+                      child: TextField(
+                        controller: _controllerContent,
+                        maxLines: null,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.multiline,
+                        cursorColor: Colors.white,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 26,
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 1,
+                          ),
+                          border: InputBorder.none,
+                          hintText: "Type something....",
+                          hintStyle: TextStyle(
+                            letterSpacing: 1.0,
+                            fontSize: 26,
+                            color: Colors.white70,
+                          ),
+                        ),
                       ),
                     ),
                   ),

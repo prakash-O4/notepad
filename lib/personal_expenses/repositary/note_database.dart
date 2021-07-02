@@ -14,7 +14,6 @@ class NoteDatabase {
   Future<List<NoteModel>> getNote() async {
     var box = await Hive.openBox<NoteModel>(_boxname);
     List<NoteModel> _noteModel = box.values.toList();
-    print("note retrived from database");
     return _noteModel;
   }
 

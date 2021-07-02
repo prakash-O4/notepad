@@ -22,7 +22,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       try {
         await _getNotes();
         yield DataLoaded(noteModel: _noteModel);
-        print("Inital loaded");
+        // print("Inital loaded");
       } catch (e) {
         yield DataError(errorMessage: "Initial Loading error");
       }
@@ -57,7 +57,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
           color: event.color,
           date: event.date,
         );
-        print("data loaded");
+        // print("data loaded");
         yield DataLoaded(noteModel: _noteModel);
       } catch (e) {
         yield DataError(errorMessage: "update error");
@@ -71,7 +71,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     await noteDataBase.getNote().then((value) {
       _noteModel = value;
     });
-    print("note retrived");
+    // print("note retrived");
   }
 
   // add note to the database
@@ -105,7 +105,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     required int color,
     required String date,
   }) async {
-    print("inside update note repo");
+    // print("inside update note repo");
     await noteDataBase.updateNote(
       index,
       NoteModel(
@@ -115,7 +115,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
         date: date,
       ),
     );
-    print("before getting notes");
+    // print("before getting notes");
     await _getNotes();
   }
 //-----------------------------------------------------------------------------//
