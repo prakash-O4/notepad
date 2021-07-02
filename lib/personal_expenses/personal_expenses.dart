@@ -6,7 +6,6 @@ import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
 import 'package:quiz/personal_expenses/repositary/fav_database.dart';
 import 'package:quiz/personal_expenses/screens/note_app/home_screen.dart';
 import 'package:quiz/personal_expenses/widget/input_card.dart';
-import 'package:quiz/personal_expenses/widget/main_card.dart';
 import 'package:quiz/rough.dart';
 
 class PersonalExpenses extends StatefulWidget {
@@ -78,12 +77,13 @@ class _PersonalExpensesState extends State<PersonalExpenses> {
                     child: CircularProgressIndicator(),
                   );
                 } else if (state is DataLoaded) {
-                  var expenseData = state.expenseModel;
-                  return MainCard(
-                    appBar: appBar,
-                    expenseData: expenseData,
-                    dataBloc: _dataBloc,
-                  );
+                  // var expenseData = state.noteModel;
+                  return Container();
+                  // MainCard(
+                  //   appBar: appBar,
+                  //   expenseData: expenseData,
+                  //   dataBloc: _dataBloc,
+                  // );
                 } else if (state is DataError) {
                   var messagge = state.errorMessage;
                   return Center(

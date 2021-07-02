@@ -2,20 +2,16 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
-import 'package:quiz/personal_expenses/model/expense_model.dart';
 import 'package:quiz/personal_expenses/model/fav_model.dart';
-import 'package:quiz/personal_expenses/repositary/database.dart';
-import 'package:quiz/personal_expenses/repositary/fav_database.dart';
+import 'package:quiz/personal_expenses/model/note_model.dart';
+import 'package:quiz/personal_expenses/repositary/note_database.dart';
 part 'data_event.dart';
 part 'data_state.dart';
 
 class DataBloc extends Bloc<DataEvent, DataState> {
-  final FavDatabase favDatabase;
-  final NoteDataBase noteDataBase;
-  List<ExpenseModel> _expenseModel = [];
-  // List<FavModel> _favModel = [];
-  DataBloc({required this.noteDataBase, required this.favDatabase})
-      : super(DataInitial());
+  final NoteDatabase noteDataBase;
+  List<NoteModel> _noteModel = [];
+  DataBloc({required this.noteDataBase}) : super(DataInitial());
 
   @override
   Stream<DataState> mapEventToState(
@@ -25,8 +21,8 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       yield DataLoading();
       try {
         await _getNotes();
-        yield DataLoaded(expenseModel: _expenseModel);
-        //print("Inital loaded");
+        yield DataLoaded(noteModel: _noteModel);
+        print("Inital loaded");
       } catch (e) {
         yield DataError(errorMessage: "Initial Loading error");
       }
@@ -34,7 +30,7 @@ class DataBloc extends Bloc<DataEvent, DataState> {
       yield DataLoading();
       try {
         await _deleteNote(index: event.index);
-        yield DataLoaded(expenseModel: _expenseModel);
+        yield DataLoaded(noteModel: _noteModel);
         //print("data deleted");
       } catch (e) {
         yield DataError(errorMessage: "Delete state error");
@@ -42,12 +38,29 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     } else if (event is AddDataEvent) {
       yield DataLoading();
       try {
-        //print("inside figure");
-        await _addNote(title: event.title, content: event.content);
-        yield DataLoaded(expenseModel: _expenseModel);
-        // print("data added !");
+        await _addNote(
+            title: event.title,
+            content: event.content,
+            date: event.date,
+            color: event.color);
+        yield DataLoaded(noteModel: _noteModel);
       } catch (e) {
         yield DataError(errorMessage: "Add state error");
+      }
+    } else if (event is UpdateItem) {
+      yield DataLoading();
+      try {
+        await _updateNote(
+          index: event.index,
+          title: event.title,
+          content: event.content,
+          color: event.color,
+          date: event.date,
+        );
+        print("data loaded");
+        yield DataLoaded(noteModel: _noteModel);
+      } catch (e) {
+        yield DataError(errorMessage: "update error");
       }
     }
   }
@@ -56,14 +69,26 @@ class DataBloc extends Bloc<DataEvent, DataState> {
   //get all notes from database
   Future<void> _getNotes() async {
     await noteDataBase.getNote().then((value) {
-      _expenseModel = value;
+      _noteModel = value;
     });
+    print("note retrived");
   }
 
   // add note to the database
-  Future<void> _addNote(
-      {required String title, required String content}) async {
-    await noteDataBase.addNote(ExpenseModel(heading: title, number: content));
+  Future<void> _addNote({
+    required String title,
+    required String content,
+    required int color,
+    required String date,
+  }) async {
+    await noteDataBase.addNote(
+      NoteModel(
+        title: title,
+        content: content,
+        color: color,
+        date: date,
+      ),
+    );
     await _getNotes();
   }
 
@@ -73,6 +98,26 @@ class DataBloc extends Bloc<DataEvent, DataState> {
     await _getNotes();
   }
 
+  Future<void> _updateNote({
+    required int index,
+    required String title,
+    required String content,
+    required int color,
+    required String date,
+  }) async {
+    print("inside update note repo");
+    await noteDataBase.updateNote(
+      index,
+      NoteModel(
+        title: title,
+        content: content,
+        color: color,
+        date: date,
+      ),
+    );
+    print("before getting notes");
+    await _getNotes();
+  }
 //-----------------------------------------------------------------------------//
 // else if (event is DeleteFavItem) {
   //   yield DataLoading();

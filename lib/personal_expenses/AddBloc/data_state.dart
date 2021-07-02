@@ -14,9 +14,9 @@ class DataLoading extends DataState {
 }
 
 class DataLoaded extends DataState {
-  final List<ExpenseModel> expenseModel;
-  DataLoaded({required this.expenseModel});
-  List<Object?> get props => [expenseModel];
+  final List<NoteModel> noteModel;
+  DataLoaded({required this.noteModel});
+  List<Object?> get props => [noteModel];
 }
 
 class DataError extends DataState {

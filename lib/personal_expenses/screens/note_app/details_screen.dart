@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
 import 'package:quiz/personal_expenses/constants.dart';
-import 'package:quiz/personal_expenses/model/expense_model.dart';
-import 'package:quiz/personal_expenses/screens/note_app/add_screen.dart';
+import 'package:quiz/personal_expenses/model/note_model.dart';
+import 'package:quiz/personal_expenses/screens/note_app/update_screen.dart';
+import 'package:quiz/personal_expenses/widget/card_data.dart';
 import 'package:quiz/personal_expenses/widget/icon_card.dart';
 
-class DetaiScreen extends StatelessWidget {
-  final ExpenseModel expenseModel;
-  const DetaiScreen({required this.expenseModel});
+class DetaiScreen extends StatefulWidget {
+  final NoteModel noteModel;
+  final int index;
+  const DetaiScreen({required this.noteModel, required this.index});
+
+  @override
+  _DetaiScreenState createState() => _DetaiScreenState();
+}
+
+class _DetaiScreenState extends State<DetaiScreen> {
+  late DataBloc _dataBloc;
+  @override
+  void initState() {
+    super.initState();
+    _dataBloc = BlocProvider.of<DataBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final DataBloc _updateDataBloc = BlocProvider.of<DataBloc>(context);
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
@@ -30,10 +47,17 @@ class DetaiScreen extends StatelessWidget {
                             IconCard(icon: Icons.arrow_back_ios_new_rounded)),
                     GestureDetector(
                       onTap: () {
+                        Navigator.pop(context);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => AddScreen(),
+                            builder: (context) => BlocProvider.value(
+                              value: _updateDataBloc,
+                              child: UpdateScreen(
+                                index: widget.index,
+                                noteModel: widget.noteModel,
+                              ),
+                            ),
                           ),
                         );
                       },
@@ -45,7 +69,7 @@ class DetaiScreen extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  expenseModel.heading,
+                  widget.noteModel.title,
                   style: TextStyle(
                     height: 1.6,
                     color: Colors.white,
@@ -57,7 +81,7 @@ class DetaiScreen extends StatelessWidget {
                   height: 13,
                 ),
                 Text(
-                  "May 21, 2021",
+                  widget.noteModel.date,
                   style: TextStyle(
                     color: Color(dateColor),
                     fontSize: 17,
@@ -68,7 +92,7 @@ class DetaiScreen extends StatelessWidget {
                   height: 13,
                 ),
                 Text(
-                  expenseModel.number,
+                  widget.noteModel.content,
                   style: TextStyle(
                     height: 1.6,
                     color: Colors.white,

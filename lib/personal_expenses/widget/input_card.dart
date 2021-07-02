@@ -76,11 +76,11 @@ class _CardInputState extends State<CardInput> {
               onPressed: () {
                 setState(
                   () {
-                    widget.dataBloc.add(
-                      AddDataEvent(
-                          content: _numberController.text,
-                          title: _headingController.text),
-                    );
+                    // widget.dataBloc.add(
+                    //   AddDataEvent(
+                    //       content: _numberController.text,
+                    //       title: _headingController.text),
+                    // );
                     Navigator.pop(context);
                   },
                 );

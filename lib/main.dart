@@ -3,20 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
-import 'package:quiz/personal_expenses/model/expense_model.dart';
-import 'package:quiz/personal_expenses/model/fav_model.dart';
-import 'package:quiz/personal_expenses/repositary/database.dart';
-import 'package:quiz/personal_expenses/repositary/fav_database.dart';
+import 'package:quiz/personal_expenses/model/note_model.dart';
+import 'package:quiz/personal_expenses/repositary/note_database.dart';
 import 'package:quiz/personal_expenses/screens/note_app/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final document = await getApplicationDocumentsDirectory();
   Hive.init(document.path);
-  Hive.registerAdapter<ExpenseModel>(ExpenseModelAdapter());
-  Hive.registerAdapter<FavModel>(FavModelAdapter());
-  await Hive.openBox<ExpenseModel>("Note");
-  await Hive.openBox<FavModel>("FavNote");
+  Hive.registerAdapter<NoteModel>(NoteModelAdapter());
+  await Hive.openBox<NoteModel>("NoteData");
   runApp(MyApp());
 }
 
@@ -42,16 +38,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final NoteDataBase noteDataBase = NoteDataBase();
-  final FavDatabase favDatabase = FavDatabase();
+  final NoteDatabase noteDatabase = NoteDatabase();
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => DataBloc(
-            noteDataBase: noteDataBase,
-            favDatabase: favDatabase,
+            noteDataBase: noteDatabase,
           ),
         ),
       ],

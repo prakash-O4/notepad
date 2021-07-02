@@ -1,10 +1,8 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
 import 'package:quiz/personal_expenses/constants.dart';
-import 'package:quiz/personal_expenses/model/expense_model.dart';
+import 'package:quiz/personal_expenses/model/note_model.dart';
 import 'package:quiz/personal_expenses/screens/note_app/add_screen.dart';
 import 'package:quiz/personal_expenses/screens/note_app/details_screen.dart';
 import 'package:quiz/personal_expenses/widget/card_tile.dart';
@@ -26,23 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _dataBloc = BlocProvider.of<DataBloc>(context);
     _dataBloc.add(InitialEvent());
-  }
-
-  returnColor() {
-    var data = Random().nextInt(cardColor.length);
-    var colorData = cardColor[data];
-    return colorData;
-  }
-
-  currentDate() {
-    var now = new DateTime.now();
-    var formatter = new DateFormat.yMMMMd('en_US');
-    String formattedDate = formatter.format(now);
-    print(formattedDate);
+    print("initial event fired");
   }
 
   @override
   Widget build(BuildContext context) {
+    final DataBloc _addDataBloc = BlocProvider.of<DataBloc>(context);
+    final DataBloc _detailDataBloc = BlocProvider.of<DataBloc>(context);
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
@@ -67,10 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
-                        // returnColor();
-                        currentDate();
-                      },
+                      onTap: () {},
                       child: IconCard(
                         icon: Icons.search_rounded,
                       ),
@@ -98,22 +83,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     } else if (state is DataLoaded) {
-                      List<ExpenseModel> expenseModel = state.expenseModel;
-                      print(expenseModel.length);
+                      List<NoteModel> noteModel = state.noteModel;
+                      // print(noteModel.length);
                       return Container(
-                        child: expenseModel.length != 0
+                        child: noteModel.length != 0
                             ? StaggeredGridView.countBuilder(
                                 shrinkWrap: true,
                                 physics: ClampingScrollPhysics(),
                                 crossAxisCount: 4,
                                 mainAxisSpacing: 4,
                                 crossAxisSpacing: 4,
-                                itemCount: expenseModel.length,
+                                itemCount: noteModel.length,
                                 itemBuilder: (context, index) {
-                                  var number = returnColor();
-
                                   return GestureDetector(
                                     onLongPress: () {
+                                      print("data need to be deleted");
                                       _dataBloc.add(
                                         DeleteItem(index: index),
                                       );
@@ -122,15 +106,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => DetaiScreen(
-                                            expenseModel: expenseModel[index],
+                                          builder: (context) =>
+                                              BlocProvider.value(
+                                            value: _detailDataBloc,
+                                            child: DetaiScreen(
+                                              noteModel: noteModel[index],
+                                              index: index,
+                                            ),
                                           ),
                                         ),
                                       );
                                     },
                                     child: BackGroundTile(
-                                      backgroundColor: Color(number),
-                                      title: expenseModel[index].heading,
+                                      backgroundColor:
+                                          Color(noteModel[index].color),
+                                      title: noteModel[index].title,
+                                      date: noteModel[index].date,
                                     ),
                                   );
                                 },
@@ -174,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
             context,
             MaterialPageRoute(
               builder: (context) => BlocProvider.value(
-                value: _dataBloc,
+                value: _addDataBloc,
                 child: AddScreen(),
               ),
             ),

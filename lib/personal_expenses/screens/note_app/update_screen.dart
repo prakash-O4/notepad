@@ -1,31 +1,31 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
 import 'package:quiz/personal_expenses/constants.dart';
+import 'package:quiz/personal_expenses/model/note_model.dart';
 import 'package:quiz/personal_expenses/widget/icon_card.dart';
 
-class AddScreen extends StatefulWidget {
-  const AddScreen({Key? key}) : super(key: key);
+class UpdateScreen extends StatefulWidget {
+  final NoteModel noteModel;
+  final int index;
+  const UpdateScreen({required this.noteModel, required this.index});
 
   @override
   _AddScreenState createState() => _AddScreenState();
 }
 
-class _AddScreenState extends State<AddScreen> {
-  late DataBloc _addDataBloc;
+class _AddScreenState extends State<UpdateScreen> {
+  late DataBloc _updateDataBloc;
+  late TextEditingController _controllerTitle;
+  late TextEditingController _controllerContent;
   @override
   void initState() {
     super.initState();
-    _addDataBloc = BlocProvider.of(context);
-  }
-
-  returnColor() {
-    var data = Random().nextInt(cardColor.length);
-    var colorData = cardColor[data];
-    return colorData;
+    _updateDataBloc = BlocProvider.of(context);
+    _controllerTitle = TextEditingController(text: widget.noteModel.title);
+    _controllerContent = TextEditingController(text: widget.noteModel.content);
   }
 
   currentDate() {
@@ -36,9 +36,14 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   @override
+  void dispose() {
+    _controllerContent.dispose();
+    _controllerTitle.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController _controllerTitle = TextEditingController();
-    TextEditingController _controllerContent = TextEditingController();
     return Scaffold(
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
@@ -66,17 +71,17 @@ class _AddScreenState extends State<AddScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          var color = returnColor();
                           var date = currentDate();
-                          _addDataBloc.add(
-                            AddDataEvent(
+                          _updateDataBloc.add(
+                            UpdateItem(
+                              index: widget.index,
                               content: _controllerContent.text,
                               title: _controllerTitle.text,
-                              color: color,
+                              color: widget.noteModel.color,
                               date: date,
                             ),
                           );
-                          // print("data added");
+                          print("update event fired!!!");
                           Navigator.pop(context);
                         },
                         child: IconCard(icon: Icons.save),

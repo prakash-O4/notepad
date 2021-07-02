@@ -11,9 +11,16 @@ class InitialEvent extends DataEvent {
 class AddDataEvent extends DataEvent {
   final String title;
   final String content;
-  AddDataEvent({required this.content, required this.title});
+  final int color;
+  final String date;
+  AddDataEvent({
+    required this.content,
+    required this.title,
+    required this.color,
+    required this.date,
+  });
   @override
-  List<Object?> get props => [content, title];
+  List<Object?> get props => [content, title,color,date];
 }
 
 class DeleteItem extends DataEvent {
@@ -21,6 +28,23 @@ class DeleteItem extends DataEvent {
   DeleteItem({required this.index});
   @override
   List<Object?> get props => [index];
+}
+
+class UpdateItem extends DataEvent {
+  final int index;
+  final String title;
+  final String content;
+  final int color;
+  final String date;
+  UpdateItem({
+    required this.color,
+    required this.content,
+    required this.title,
+    required this.index,
+    required this.date,
+  });
+  @override
+  List<Object?> get props => [index,title,content,color,date];
 }
 
 class AddFavorite extends DataEvent {

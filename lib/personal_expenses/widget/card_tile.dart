@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class BackGroundTile extends StatelessWidget {
   final Color backgroundColor;
   final String title;
-  BackGroundTile({required this.backgroundColor, required this.title});
+  final String date;
+  BackGroundTile(
+      {required this.backgroundColor, required this.title, required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class BackGroundTile extends StatelessWidget {
                 bottom: 4,
               ),
               child: Text(
-                'Mar 12, 2021',
+                date,
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 17,

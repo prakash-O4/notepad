@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:quiz/personal_expenses/model/expense_model.dart';
 
 //open box
-class NoteDataBase {
+class NoteDataBas {
   String _boxName = "Note";
 
   Future<Box> createBox() async {
