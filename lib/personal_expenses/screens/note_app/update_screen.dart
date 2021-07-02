@@ -5,6 +5,7 @@ import 'package:quiz/personal_expenses/AddBloc/data_bloc.dart';
 import 'package:quiz/personal_expenses/constants.dart';
 import 'package:quiz/personal_expenses/model/note_model.dart';
 import 'package:quiz/personal_expenses/widget/icon_card.dart';
+import 'package:quiz/personal_expenses/widget/input_card.dart';
 
 class UpdateScreen extends StatefulWidget {
   final NoteModel noteModel;
@@ -68,17 +69,25 @@ class _AddScreenState extends State<UpdateScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          var date = currentDate();
-                          BlocProvider.of<DataBloc>(context).add(
-                            UpdateItem(
-                              index: widget.index,
-                              content: _controllerContent.text,
-                              title: _controllerTitle.text,
-                              color: widget.noteModel.color,
-                              date: date,
-                            ),
-                          );
-                          Navigator.pop(context);
+                          if (_controllerTitle.value.text.isNotEmpty &&
+                              _controllerContent.value.text.isNotEmpty) {
+                            var date = currentDate();
+                            BlocProvider.of<DataBloc>(context).add(
+                              UpdateItem(
+                                index: widget.index,
+                                content: _controllerContent.text,
+                                title: _controllerTitle.text,
+                                color: widget.noteModel.color,
+                                date: date,
+                              ),
+                            );
+                            Navigator.pop(context);
+                          } else {
+                            SimpleCustomAlert(
+                                text:
+                                    "Please insert both title and content to save",
+                                isDev: false);
+                          }
                         },
                         child: IconCard(icon: Icons.save),
                       ),
@@ -88,6 +97,7 @@ class _AddScreenState extends State<UpdateScreen> {
                     height: 30,
                   ),
                   TextField(
+                    textInputAction: TextInputAction.done,
                     controller: _controllerTitle,
                     cursorColor: Colors.white,
                     style: TextStyle(
@@ -111,6 +121,7 @@ class _AddScreenState extends State<UpdateScreen> {
                     ),
                   ),
                   TextField(
+                    textInputAction: TextInputAction.done,
                     controller: _controllerContent,
                     maxLines: null,
                     keyboardType: TextInputType.multiline,

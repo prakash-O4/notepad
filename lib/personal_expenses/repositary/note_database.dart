@@ -33,6 +33,5 @@ class NoteDatabase {
   Future<void> updateNote(int index, NoteModel noteModel) async {
     var box = await createBox();
     await box.putAt(index, noteModel);
-    print("notes updated");
   }
 }
