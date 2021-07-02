@@ -137,7 +137,7 @@ class _AddScreenState extends State<AddScreen> {
                   ),
                   Container(
                     constraints: BoxConstraints(
-                      maxHeight: 70,
+                      maxHeight: 130,
                     ),
                     child: SingleChildScrollView(
                       child: TextField(
