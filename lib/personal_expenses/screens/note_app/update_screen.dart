@@ -46,14 +46,14 @@ class _AddScreenState extends State<UpdateScreen> {
       backgroundColor: Color(backgroundColor),
       body: SafeArea(
         child: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
+          physics: const ClampingScrollPhysics(),
           child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 10,
               ),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -63,7 +63,7 @@ class _AddScreenState extends State<UpdateScreen> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: IconCard(
+                        child: const IconCard(
                           icon: Icons.arrow_back_ios_new_rounded,
                         ),
                       ),
@@ -84,35 +84,36 @@ class _AddScreenState extends State<UpdateScreen> {
                             Navigator.pop(context);
                           } else {
                             SimpleCustomAlert(
-                                text:
-                                    "Please insert both title and content to save",
-                                isDev: false);
+                              text:
+                                  "Please insert both title and content to save",
+                              isDev: false,
+                            );
                           }
                         },
-                        child: IconCard(icon: Icons.save),
+                        child: const IconCard(icon: Icons.save),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   TextField(
                     textInputAction: TextInputAction.done,
                     controller: _controllerTitle,
                     cursorColor: Colors.white,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 28,
                       fontWeight: FontWeight.w600,
                     ),
                     maxLines: 2,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                         vertical: -4,
                       ),
                       border: InputBorder.none,
                       hintText: "Title",
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         letterSpacing: 1.0,
                         fontSize: 28,
                         color: Colors.white70,
@@ -126,17 +127,17 @@ class _AddScreenState extends State<UpdateScreen> {
                     maxLines: null,
                     keyboardType: TextInputType.multiline,
                     cursorColor: Colors.white,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 26,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       contentPadding: EdgeInsets.symmetric(
                         vertical: 1,
                       ),
                       border: InputBorder.none,
                       hintText: "Type something....",
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         letterSpacing: 1.0,
                         fontSize: 26,
                         color: Colors.white70,

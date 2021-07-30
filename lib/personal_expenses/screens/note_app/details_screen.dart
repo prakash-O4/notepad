@@ -43,8 +43,8 @@ class _DetaiScreenState extends State<DetaiScreen> {
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child:
-                            IconCard(icon: Icons.arrow_back_ios_new_rounded)),
+                        child: const IconCard(
+                            icon: Icons.arrow_back_ios_new_rounded)),
                     GestureDetector(
                       onTap: () {
                         Navigator.pop(context);
@@ -61,23 +61,23 @@ class _DetaiScreenState extends State<DetaiScreen> {
                           ),
                         );
                       },
-                      child: IconCard(icon: Icons.edit),
+                      child: const IconCard(icon: Icons.edit),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Text(
                   widget.noteModel.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     height: 1.6,
                     color: Colors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 13,
                 ),
                 Text(
@@ -88,12 +88,12 @@ class _DetaiScreenState extends State<DetaiScreen> {
                     fontWeight: FontWeight.w300,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 13,
                 ),
                 Text(
                   widget.noteModel.content,
-                  style: TextStyle(
+                  style: const TextStyle(
                     height: 1.6,
                     color: Colors.white,
                     fontSize: 18,

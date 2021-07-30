@@ -21,7 +21,7 @@ class BackGroundTile extends StatelessWidget {
           children: [
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 22,
                 fontWeight: FontWeight.w400,
@@ -34,7 +34,7 @@ class BackGroundTile extends StatelessWidget {
               ),
               child: Text(
                 date,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.grey,
                   fontSize: 17,
                 ),

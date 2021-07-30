@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: 10,
               vertical: 8,
             ),
@@ -65,19 +65,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                      child: IconCard(
+                      child: const IconCard(
                         icon: Icons.help,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 7,
                 ),
                 BlocBuilder<DataBloc, DataState>(
                   builder: (context, state) {
                     if (state is DataLoading) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     } else if (state is DataError) {
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Center(
                         child: Text(
                           message,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                             fontSize: 22,
                           ),
@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             : Container(
                                 height: MediaQuery.of(context).size.height - 90,
                                 width: MediaQuery.of(context).size.width,
-                                child: Center(
+                                child: const Center(
                                   child: Text(
                                     "Add some note 🙃",
                                     style: TextStyle(
@@ -151,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                       );
                     }
-                    return Center(
+                    return const Center(
                       child: Text(
                         "No state to load",
                         style: TextStyle(
@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
         backgroundColor: Color(backgroundColor),
-        child: Center(
+        child: const Center(
           child: Icon(
             Icons.add,
             color: Colors.white,
